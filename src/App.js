@@ -18,17 +18,19 @@ export default function App() {
     const fetchGames = async()=>{
         const gameList = await getAllGames()
         setGameList(gameList)
+        setGameGenreList(gameList)
     }
     fetchGames()
 }, [])
   const fetchByGenre = async(id)=>{
     const gamesGenreList = await getGamesByGenreId(id)
     setGameGenreList(gamesGenreList)
-    console.log(gameGenreList);
   }
+  
   const onSearchValue=(e)=>{
     setSearchValue(e.target.value)
   }
+
   return (
     <div className="App">
       <div className="container">
