@@ -235,3 +235,32 @@ main{
     }
   }
 }
+footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  
+  .navigate{
+    
+    div{
+      display: flex;
+      align-items: center;
+    }
+    span{
+      font-size: 20px;
+      color: #fff;
+    }
+    .next-arrow{
+      margin-left: 10px;
+      font-size: 30px;
+      color: #fff;
+    }
+    .back-arrow{
+      margin-right: 10px;
+      font-size: 30px;
+      color: #fff;
+    }
+
+  }
+}

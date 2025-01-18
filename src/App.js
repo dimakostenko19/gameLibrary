@@ -7,13 +7,17 @@ import Slider from './components/Slider';
 import TopRated from './components/TopRating';
 import GameList from './components/GameList';
 import { getGamesByGenreId } from "./services/API"
+import Pagination from './components/Pagination';
 
 export default function App() {
   const [gameList, setGameList] = useState([])
   const [gameGenreList, setGameGenreList] = useState([])
   const [selectedGenreName, setSelectedGenreName] = useState('Action')
+  const [selectedGenreId, setSelectedGenreId] = useState(null);
   const [menuActive, setMenuActive] = useState(false)
   const [searchValue, setSearchValue] = useState('')
+  const [page, setPage] = useState(1)
+
   useEffect(()=>{
     const fetchGames = async()=>{
         const gameList = await getAllGames()
@@ -22,15 +26,19 @@ export default function App() {
     }
     fetchGames()
 }, [])
-  const fetchByGenre = async(id)=>{
-    const gamesGenreList = await getGamesByGenreId(id)
-    setGameGenreList(gamesGenreList)
-  }
+useEffect(() => {
+  const fetchByGenre = async () => {
+    if (selectedGenreId) {
+      const gamesGenreList = await getGamesByGenreId(selectedGenreId, page);
+      setGameGenreList(gamesGenreList);
+    }
+  };
+  fetchByGenre();
+}, [selectedGenreId, page])
   
   const onSearchValue=(e)=>{
     setSearchValue(e.target.value)
   }
-
   return (
     <div className="App">
       <div className="container">
@@ -45,7 +53,7 @@ export default function App() {
           <button className="menu-btn" onClick={()=>setMenuActive(!menuActive)}>
             <img src="img/menu-icon.png" alt="menu"/>
           </button>
-          <Menu active={menuActive} setMenuActive={setMenuActive} fetchByGenre={fetchByGenre} setSelectedGenreName={(name)=>setSelectedGenreName(name)}/>
+          <Menu active={menuActive} setPage={setPage} setMenuActive={setMenuActive} setSelectedGenreId={setSelectedGenreId} setSelectedGenreName={(name)=>setSelectedGenreName(name)}/>
         </div>
       </header>
       <main onClick={()=>setMenuActive(false)}>
@@ -59,6 +67,9 @@ export default function App() {
           <GameList gameList={gameGenreList} searchValue={searchValue} selectedGenreName={selectedGenreName}/>
         </div>
       </main>
+      <footer>
+        <Pagination page={page} setPage={setPage}/>
+      </footer>
       </div>
     </div>
   );

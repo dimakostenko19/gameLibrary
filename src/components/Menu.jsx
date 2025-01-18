@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getGenreList, getGamesByGenreId } from "../services/API"
-export default function Menu({active, setMenuActive, fetchByGenre, setSelectedGenreName}) {
+export default function Menu({active, setSelectedGenreId, setMenuActive, setPage, setSelectedGenreName}) {
 
 
   const [genreList, setGenreList] = useState([])
@@ -18,7 +18,7 @@ export default function Menu({active, setMenuActive, fetchByGenre, setSelectedGe
         <ul>
             <li className="genres">Genres</li>
             {genreList.map((item)=>(
-              <div onClick={()=>{fetchByGenre(item.id); setMenuActive(false); setSelectedGenreName(item.name)}} className="genres-item">
+              <div onClick={()=>{setSelectedGenreId(item.id); setPage(1); setMenuActive(false); setSelectedGenreName(item.name)}} className="genres-item">
                 <img src={item.image_background}/>
               <li>{item.name}</li>
               </div>

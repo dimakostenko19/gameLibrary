@@ -14,8 +14,8 @@ const getAllGames = async()=>{
     const response = await axiosInctance('/games?key='+key)
     return response.data.results
 }
-const getGamesByGenreId = async(id)=>{
-    const response = await axiosInctance(`/games?key=` +key+'&genres='+`${id}`)
+const getGamesByGenreId = async(id, page=1)=>{
+    const response = await axiosInctance(`/games?key=${key}&genres=${id}&page=${page}`)
     return response.data.results
 }
 
